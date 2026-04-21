@@ -1,0 +1,28 @@
+services:
+  vanet:
+    build:
+      context: .
+      args:
+        USER_ID: ${UID}
+        GROUP_ID: ${GID}
+
+    container_name: vanet1
+    stdin_open: true
+    tty: true
+
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - LIBGL_ALWAYS_SOFTWARE=1
+
+    volumes:
+      - ./workspace:/home/user/omnet
+      - ./workspace/vanet:/root/omnet/vanet
+      - ./workspace/veins:/root/omnet/veins
+      - ./workspace/sumo:/root/omnet/sumo
+
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    network_mode: bridge
+    ports:
+      - "8100:8100"
+    working_dir: /home/user/omnet
